@@ -1,0 +1,246 @@
+#footerarr_
+  script(src="/javascripts/d3.js")
+  //script(src="http://d3js.org/d3.v3.min.js")
+  script(type="text/javascript").
+      var margin = {top: 20, right: 20, bottom: 30, left: 40},
+              width = 960 - margin.left - margin.right,
+              height = 500 - margin.top - margin.bottom;
+      var x = d3.scale.ordinal()
+              .rangeRoundBands([0, width], .1);
+      var y = d3.scale.linear()
+              .range([height, 0]);
+      var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient("bottom");
+      var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient("left")
+              .ticks(1);
+      // rpw inputdata  !(var) if you don't want something in the output escaped, use  within the view.
+      var gapLengthData = !{json_gapLength};
+      var svgGap = d3.select(".chartGap").append("svg")
+              .attr("width", width + margin.left + margin.right)
+              .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      d3.tsv("/javascripts/data.tsv", type, function (error, data) {
+      //var data = [{"frequency":0.10,"letter":"A" },{"frequency":0.20,"letter":"B"}];
+             var data = gapLengthData;
+      //console.log(data);
+             x.domain(data.map(function(d) { return d.seq; }));
+             y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+             svgGap.append("g")
+                     .attr("class", "x axis")
+                     .attr("transform", "translate(0," + height + ")")
+                     .call(xAxis);
+             svgGap.append("g")
+                     .attr("class", "y axis")
+                     .call(yAxis)
+                     .append("text")
+                     .attr("transform", "rotate(-90)")
+                     .attr("y", 6)
+                     .attr("dy", ".71em")
+                     .style("text-anchor", "end")
+                     .text("Frequency");
+             svgGap.selectAll(".bar")
+                     .data(data)
+                     .enter().append("rect")
+                     .attr("class", "bar")
+                     .attr("x", function(d) { return x(d.seq); })
+                     .attr("width", x.rangeBand())
+                     .attr("y", function(d) { return y(d.frequency); })
+                     .attr("height", function(d) { return height - y(d.frequency); });
+      });
+      //contiggap Length
+      var svgContigWithN = d3.select(".chartContigWithN").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      d3.tsv("/javascripts/data.tsv", type, function(error, data) {     //var data = [{"frequency":0.10,"letter":"A" },{"frequency":0.20,"letter":"B"}];
+      var data = [{"frequency":11,"seq":0},{"frequency":75,"seq":1},{"frequency":1,"seq":2},{"frequency":97,"seq":3},{"frequency":64,"seq":4},{"frequency":1,"seq":5}];
+      data = !{json_contigLengthWithN};
+      console.log(data);
+             x.domain(data.map(function(d) { return d.seq; }));
+             y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
+             svgContigWithN.append("g")
+                     .attr("class", "x axis")
+                     .attr("transform", "translate(0," + height + ")")
+                     .call(xAxis);
+             svgContigWithN.append("g")
+                     .attr("class", "y axis")
+                     .call(yAxis)
+                     .append("text")
+                     .attr("transform", "rotate(-90)")
+                     .attr("y", 6)
+                     .attr("dy", ".71em")
+                     .style("text-anchor", "end")
+                     .text("Frequency");
+             svgContigWithN.selectAll(".bar")
+                     .data(data)
+                     .enter().append("rect")
+                     .attr("class", "bar")
+                     .attr("x", function(d) { return x(d.seq); })
+                     .attr("width", x.rangeBand())
+                     .attr("y", function(d) { return y(d.frequency); })
+                     .attr("height", function(d) { return height - y(d.frequency); });
+      });
+      var svgContigWithoutN = d3.select(".chartContigWithoutN").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      d3.tsv("/javascripts/data.tsv",type, function (error, data) {
+      //var data = [{"frequency":0.10,"letter":"A" },{"frequency":0.20,"letter":"B"}];
+             var data = [{"frequency":11,"seq":0},{"frequency":64,"seq":1},{"frequency":5,"seq":2},{"frequency":1,"seq":3},{"frequency":31,"seq":4},{"frequency":8,"seq":5},{"frequency":49,"seq":6},{"frequency":64,"seq":7},{"frequency":1,"seq":8}];
+             data = !{json_contigLengthWithoutN};
+             x.domain(data.map(function (d) {
+                 return d.seq;
+             }));
+             y.domain([0, d3.max(data, function (d) {
+                 return d.frequency;
+             })]);
+             svgContigWithoutN.append("g")
+                     .attr("class", "x axis")
+                     .attr("transform", "translate(0," + height + ")")
+                     .call(xAxis);
+             svgContigWithoutN.append("g")
+                     .attr("class", "y axis")
+                     .call(yAxis)
+                     .append("text")
+                     .attr("transform", "rotate(-90)")
+                     .attr("y", 6)
+                     .attr("dy", ".71em")
+                     .style("text-anchor", "end")
+                     .text("Frequency");
+             svgContigWithoutN.selectAll(".bar")
+                     .data(data)
+                     .enter().append("rect")
+                     .attr("class", "bar")
+                     .attr("x", function (d) {
+                         return x(d.seq);
+                     })
+                     .attr("width", x.rangeBand())
+                     .attr("y", function (d) {
+                         return y(d.frequency);
+                     })
+                     .attr("height", function (d) {
+                         return height - y(d.frequency);
+                     });
+      });
+      function type(d) {
+      d.frequency = +d.frequency;
+      console.log(d.frequency)
+      return d;
+      }
+      //// ScaffoldgapLength CHART
+      var margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
+      var x0 = d3.scale.ordinal()
+      .rangeRoundBands([0, width], .1);
+      var x1 = d3.scale.ordinal();
+      var y = d3.scale.linear()
+      .range([height, 0]);
+      var color = d3.scale.ordinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      var xAxis = d3.svg.axis()
+      .scale(x0)
+      .orient("bottom");
+      var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .tickFormat(d3.format(".2s"));
+      var svgScaffoldGrouped = d3.select(".chartScaffoldGrouped").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      d3.csv("/javascripts/data.csv", function (error, data) {
+      //var data = [{"withN":10,"withoutN":8 },{"withN":40,"withoutN":10}];
+         var ageNames = d3.keys(data[0]).filter(function (key) {
+             return key !== "State";
+         });
+         data.forEach(function (d) {
+             d.ages = ageNames.map(function (name) {
+                 return {name: name, value: +d[name]};
+             });
+         });
+         x0.domain(data.map(function (d) {
+             return d.State;
+         }));
+         x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
+         y.domain([0, d3.max(data, function (d) {
+             return d3.max(d.ages, function (d) {
+                 return d.value;
+             });
+         })]);
+         svgScaffoldGrouped.append("g")
+                 .attr("class", "x axis")
+                 .attr("transform", "translate(0," + height + ")")
+                 .call(xAxis);
+         svgScaffoldGrouped.append("g")
+                 .attr("class", "y axis")
+                 .call(yAxis)
+                 .append("text")
+                 .attr("transform", "rotate(-90)")
+                 .attr("y", 6)
+                 .attr("dy", ".71em")
+                 .style("text-anchor", "end")
+                 .text("Population");
+         var state = svgScaffoldGrouped.selectAll(".state")
+                 .data(data)
+                 .enter().append("g")
+                 .attr("class", "g")
+                 .attr("transform", function (d) {
+                     return "translate(" + x0(d.State) + ",0)";
+                 });
+         state.selectAll("rect")
+                 .data(function (d) {
+                     return d.ages;
+                 })
+                 .enter().append("rect")
+                 .attr("width", x1.rangeBand())
+                 .attr("x", function (d) {
+                     return x1(d.name);
+                 })
+                 .attr("y", function (d) {
+                     return y(d.value);
+                 })
+                 .attr("height", function (d) {
+                     return height - y(d.value);
+                 })
+                 .style("fill", function (d) {
+                     return color(d.name);
+                 });
+         var legend = svgScaffoldGrouped.selectAll(".legend")
+                 .data(ageNames.slice().reverse())
+                 .enter().append("g")
+                 .attr("class", "legend")
+                 .attr("transform", function (d, i) {
+                     return "translate(0," + i * 20 + ")";
+                 });
+         legend.append("rect")
+                 .attr("x", width - 18)
+                 .attr("width", 18)
+                 .attr("height", 18)
+                 .style("fill", color);
+         legend.append("text")
+                 .attr("x", width - 24)
+                 .attr("y", 9)
+                 .attr("dy", ".35em")
+                 .style("text-anchor", "end")
+                 .text(function (d) {
+                     return d;
+                 });
+      });
+      //script(src="/javascripts/d3.js")
+
+  //script(src="/javascripts/d3.js")
+  //script(type='text/javascript').
+   var data = [#{data}];
+   var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, 420]);
+   d3.select(".chart").selectAll("div").data(data).enter().append("div")
+   .style("width", function(d) { return x(d) + "px"; })
+   .text(function(d) { return d; });
+  p Copyright (c) footer

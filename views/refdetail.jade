@@ -1,0 +1,49 @@
+extends layout
+block content
+
+  h1 #{title} for #{refId}
+  each refValue, refIndex in refList
+    each specValue, specIndex in refValue.reference
+      if specIndex == "name"
+        h2 NAME #{specValue}
+      if specIndex == "species"
+        h2 SPECIES #{specValue}
+      if specIndex == "ScaffoldStat" 
+        h3 ScaffoldStat
+        each scafValue, scafIndex in specValue
+         if scafIndex == "Nstats"
+          each scafSpecValue, scafSpecIndex in scafValue
+           li #{scafSpecIndex} : #{scafSpecValue}
+         else
+          li #{scafIndex} : #{scafValue} 
+      if specIndex == "ContigStat"
+        h3 ContigStats
+        each contigValue, contigIndex in specValue
+          li #{contigIndex}:
+            each contigSpecValue, contigSpecIndex in contigValue
+              if contigSpecIndex == "Nstats"
+                each val, index in contigSpecValue
+                 li #{index}: #{val}
+              else
+               li #{contigSpecIndex} : #{contigSpecValue}
+      if specIndex == "GapStat"
+        h3 GapStats
+        each gapValue, gapIndex in specValue
+         if gapIndex == "Nstats"
+          li #{gapIndex}:
+           each gapSpecValue, gapSpecIndex in gapValue
+            li #{gapSpecIndex} : #{gapSpecValue}
+         else
+          li #{gapIndex} : #{gapValue}
+
+  h1 LengthDistribution
+  h2 gapStats
+  .chartGap
+  h2 contigStats
+  h3 contigWithN
+  .chartContigWithN
+  h3 contigWithoutN
+  .chartContigWithoutN
+  h2 scaffoldStats
+  .chartScaffoldGrouped
+   
