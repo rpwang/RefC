@@ -1,8 +1,24 @@
 doctype html
-html
+- var foundationclasses = ['js','no-flexbox','flexboxlegacy','canvas','canvastext','webgl','no-touch','geolocation','postmessage','no-websqldatabase','indexeddb','hashchange','history','draganddrop','websockets','rgba','hsla','multiplebgs','backgroundsize','borderimage','borderradius','boxshadow','textshadow','opacity','cssanimations','csscolumns','cssgradients','no-cssreflections','csstransforms','csstransforms3d','csstransitions','fontface','generatedcontent','video','audio','localstorage','sessionstorage','webworkers','applicationcache','svg','inlinesvg','smil','svgclippaths']
+html(class=foundationclasses)(lang='en')(style='')
   head
+    meta(chart='utf-8')
+    meta(content='width=device-width, initial-scale=1.0')(name='viewort')
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/foundation.css')
+    link(rel='stylesheet', href='/stylesheets/layout.css') 
+    script(src='/javascripts/vendor/modernizr.js')
+    meta(class='foundation-data-attribute-namespace')
+    meta(class='foundation-mq-xxlarge')
+    meta(class='foundation-mq-xlarge-only')
+    meta(class='foundation-mq-xlarge')
+    meta(class='foundation-mq-large-only')
+    meta(class='foundation-mq-large')
+    meta(class='foundation-mq-medium-only')
+    meta(class='foundation-mq-medium')
+    meta(class='foundation-mq-small-only')
+    meta(class='foundation-mq-small')
+    meta(class='foundation-mq-topbar')
   body
     block content
     include footer

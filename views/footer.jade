@@ -1,6 +1,6 @@
-#footerarr_
+#footerarr_.row
+ div(class='large-12 columns')
   script(src="/javascripts/d3.js")
-  //script(src="http://d3js.org/d3.v3.min.js")
   script(type="text/javascript").
       var margin = {top: 20, right: 20, bottom: 30, left: 40},
               width = 960 - margin.left - margin.right,
@@ -24,9 +24,7 @@
               .append("g")
               .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
       d3.tsv("/javascripts/data.tsv", type, function (error, data) {
-      //var data = [{"frequency":0.10,"letter":"A" },{"frequency":0.20,"letter":"B"}];
              var data = gapLengthData;
-      //console.log(data);
              x.domain(data.map(function(d) { return d.seq; }));
              y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
              svgGap.append("g")
@@ -60,7 +58,6 @@
       d3.tsv("/javascripts/data.tsv", type, function(error, data) {     //var data = [{"frequency":0.10,"letter":"A" },{"frequency":0.20,"letter":"B"}];
       var data = [{"frequency":11,"seq":0},{"frequency":75,"seq":1},{"frequency":1,"seq":2},{"frequency":97,"seq":3},{"frequency":64,"seq":4},{"frequency":1,"seq":5}];
       data = !{json_contigLengthWithN};
-      console.log(data);
              x.domain(data.map(function(d) { return d.seq; }));
              y.domain([0, d3.max(data, function(d) { return d.frequency; })]);
              svgContigWithN.append("g")
@@ -91,7 +88,6 @@
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
       d3.tsv("/javascripts/data.tsv",type, function (error, data) {
-      //var data = [{"frequency":0.10,"letter":"A" },{"frequency":0.20,"letter":"B"}];
              var data = [{"frequency":11,"seq":0},{"frequency":64,"seq":1},{"frequency":5,"seq":2},{"frequency":1,"seq":3},{"frequency":31,"seq":4},{"frequency":8,"seq":5},{"frequency":49,"seq":6},{"frequency":64,"seq":7},{"frequency":1,"seq":8}];
              data = !{json_contigLengthWithoutN};
              x.domain(data.map(function (d) {
@@ -130,18 +126,19 @@
       });
       function type(d) {
       d.frequency = +d.frequency;
-      console.log(d.frequency)
       return d;
       }
       //// ScaffoldgapLength CHART
       var margin = {top: 20, right: 20, bottom: 30, left: 40},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
+
       var x0 = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1);
       var x1 = d3.scale.ordinal();
       var y = d3.scale.linear()
       .range([height, 0]);
+
       var color = d3.scale.ordinal()
       .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
       var xAxis = d3.svg.axis()
@@ -151,30 +148,35 @@
       .scale(y)
       .orient("left")
       .tickFormat(d3.format(".2s"));
+
       var svgScaffoldGrouped = d3.select(".chartScaffoldGrouped").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
       d3.csv("/javascripts/data.csv", function (error, data) {
       //var data = [{"withN":10,"withoutN":8 },{"withN":40,"withoutN":10}];
-         var ageNames = d3.keys(data[0]).filter(function (key) {
-             return key !== "State";
+         console.log(JSON.stringify(data))
+         var groupNames = d3.keys(data[0]).filter(function (key) {
+             return key !== "Seq";
          });
          data.forEach(function (d) {
-             d.ages = ageNames.map(function (name) {
-                 return {name: name, value: +d[name]};
+             d.groupes = groupNames.map(function (name) {
+                return {name: name, value: +d[name]};
              });
          });
          x0.domain(data.map(function (d) {
-             return d.State;
+             return d.Seq;
          }));
-         x1.domain(ageNames).rangeRoundBands([0, x0.rangeBand()]);
+
+         x1.domain(groupNames).rangeRoundBands([0, x0.rangeBand()]);
          y.domain([0, d3.max(data, function (d) {
-             return d3.max(d.ages, function (d) {
+             return d3.max(d.groupes, function (d) {
                  return d.value;
              });
          })]);
+
          svgScaffoldGrouped.append("g")
                  .attr("class", "x axis")
                  .attr("transform", "translate(0," + height + ")")
@@ -188,16 +190,16 @@
                  .attr("dy", ".71em")
                  .style("text-anchor", "end")
                  .text("Population");
-         var state = svgScaffoldGrouped.selectAll(".state")
+         var state = svgScaffoldGrouped.selectAll(".seq")
                  .data(data)
                  .enter().append("g")
                  .attr("class", "g")
                  .attr("transform", function (d) {
-                     return "translate(" + x0(d.State) + ",0)";
+                     return "translate(" + x0(d.Seq) + ",0)";
                  });
          state.selectAll("rect")
                  .data(function (d) {
-                     return d.ages;
+                     return d.groupes;
                  })
                  .enter().append("rect")
                  .attr("width", x1.rangeBand())
@@ -214,7 +216,7 @@
                      return color(d.name);
                  });
          var legend = svgScaffoldGrouped.selectAll(".legend")
-                 .data(ageNames.slice().reverse())
+                 .data(groupNames.slice().reverse())
                  .enter().append("g")
                  .attr("class", "legend")
                  .attr("transform", function (d, i) {
@@ -234,13 +236,97 @@
                      return d;
                  });
       });
-      //script(src="/javascripts/d3.js")
+      
+      var margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
 
-  //script(src="/javascripts/d3.js")
-  //script(type='text/javascript').
-   var data = [#{data}];
-   var x = d3.scale.linear().domain([0, d3.max(data)]).range([0, 420]);
-   d3.select(".chart").selectAll("div").data(data).enter().append("div")
-   .style("width", function(d) { return x(d) + "px"; })
-   .text(function(d) { return d; });
+      var x = d3.scale.ordinal()
+      .rangeRoundBands([0, width], .1);
+      var y = d3.scale.linear()
+      .rangeRound([height, 0]);
+
+      var color = d3.scale.ordinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+      var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+      var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left")
+      .tickFormat(d3.format(".2s"));
+
+      var svg = d3.select(".chartScaffoldStacked").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      
+      d3.csv("/javascripts/data.csv", function(error, data) {
+        console.log(data);
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Seq"; }));
+
+        data.forEach(function(d) {
+          var y0 = 0;
+          d.groupes = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+          d.total = d.groupes[d.groupes.length - 1].y1;
+        });
+
+       data.sort(function(a, b) { return b.total - a.total; });
+
+       x.domain(data.map(function(d) { return d.Seq; }));
+       y.domain([0, d3.max(data, function(d) { return d.total; })]);
+
+       svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+       svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Population");
+
+      var state = svg.selectAll(".seq")
+      .data(data)
+      .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x(d.Seq) + ",0)"; });
+
+      state.selectAll("rect")
+      .data(function(d) { return d.groupes; })
+      .enter().append("rect")
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .style("fill", function(d) { return color(d.name); });
+
+       var legend = svg.selectAll(".legend")
+      .data(color.domain().slice().reverse())
+      .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+      legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+      legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+      });
+  
   p Copyright (c) footer

@@ -1,41 +1,69 @@
 extends layout
 block content
-
-  h1 #{title} for #{refId}
-  each refValue, refIndex in refList
-    each specValue, specIndex in refValue.reference
+ div(class='row')
+  div(class='large-12 columns')
+    h2 #{title} for #{refId}
+    each refValue, refIndex in refList
+     each specValue, specIndex in refValue.reference
       if specIndex == "name"
         h2 NAME #{specValue}
       if specIndex == "species"
         h2 SPECIES #{specValue}
-      if specIndex == "ScaffoldStat" 
-        h3 ScaffoldStat
-        each scafValue, scafIndex in specValue
-         if scafIndex == "Nstats"
-          each scafSpecValue, scafSpecIndex in scafValue
-           li #{scafSpecIndex} : #{scafSpecValue}
-         else
-          li #{scafIndex} : #{scafValue} 
-      if specIndex == "ContigStat"
-        h3 ContigStats
-        each contigValue, contigIndex in specValue
+      if specIndex == "ScaffoldStat"
+        div(class='panel')
+          h3 Scaffold Statistic
+          h5 General
+          div(class='row')
+           div(class='large-3 medium-3 columns') 
+            ul(class='no-bullet') 
+             each scafValue, scafIndex in specValue
+              if scafIndex == "Nstats"
+              else
+               li #{scafIndex} : #{scafValue}
+           div(class='large-9 medium-9 columns')
+            div(class='large-2 columns')
+             h1 50
+             h2 #{data_scaffoldNstats.N50}
+             h2 #{data_scaffoldNstats.L50}
+            div(class='large-10 columns')
+             ul(class='inline-list')
+              li(class='n-stats')  10
+              li(class='n-stats')  20
+              li(class='n-stats') 30
+              li(class='n-stats') 40
+             ul(class='inline-list')
+              li(class='n-stats') 60
+              li(class='n-stats') 70
+              li(class='n-stats') 80
+              li(class='n-stats') 90
+            //each NstatsValue, NstatsIndex in data_scaffoldNstats
+             
+
+
+ 
+       if specIndex == "ContigStat"
+        div(class='panel')
+         h3 ContigStats
+         each contigValue, contigIndex in specValue
           li #{contigIndex}:
             each contigSpecValue, contigSpecIndex in contigValue
               if contigSpecIndex == "Nstats"
-                each val, index in contigSpecValue
-                 li #{index}: #{val}
+                ul(class='inline-list')
+                 each val, index in contigSpecValue
+                  li #{index}: #{val}
               else
                li #{contigSpecIndex} : #{contigSpecValue}
       if specIndex == "GapStat"
-        h3 GapStats
-        each gapValue, gapIndex in specValue
-         if gapIndex == "Nstats"
-          li #{gapIndex}:
-           each gapSpecValue, gapSpecIndex in gapValue
-            li #{gapSpecIndex} : #{gapSpecValue}
-         else
-          li #{gapIndex} : #{gapValue}
-
+        div(class='panel')
+         h3 GapStats
+         each gapValue, gapIndex in specValue
+          if gapIndex == "Nstats"
+           ul(class='inline-list')
+            each gapSpecValue, gapSpecIndex in gapValue
+             li #{gapSpecIndex} : #{gapSpecValue}
+          else
+           li #{gapIndex} : #{gapValue}
+ //
   h1 LengthDistribution
   h2 gapStats
   .chartGap
@@ -45,5 +73,8 @@ block content
   h3 contigWithoutN
   .chartContigWithoutN
   h2 scaffoldStats
+  h3 scaffold grouped:
   .chartScaffoldGrouped
-   
+  h3 scaffold stacked
+  .chartScaffoldStacked 
+ //

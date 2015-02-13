@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
         var arr_gapLength = lengthDisData.Gap;
         var json_gapLength = [];
         for (var arr_dataIndex = 0; arr_dataIndex < arr_gapLength.length; arr_dataIndex++){
-        json_gapLength.push({frequency:arr_gapLength[arr_dataIndex],seq:arr_dataIndex})
+        	json_gapLength.push({frequency:arr_gapLength[arr_dataIndex],seq:arr_dataIndex})
         }
 
         var arr_contigLengthWithN = lengthDisData.Contig.WithN;
@@ -32,10 +32,18 @@ router.get('/', function(req, res, next) {
         }
         var arr_scaffoldLength = lengthDisData.Scaffold;
 
+        console.log(lengthDisData.Scaffold)
+        var arr_disData_scaffold = JSON.stringify(lengthDisData.Scaffold)
+        var json_scaffold = [];
+        for (var index = 0; index < arr_disData_scaffold.length;index++){
+		//console.log(arr_disData_scaffold.Seq1[index]);
+	} 
+	     //json_scaffold.push({seq:seq1,});
 
-
-
-
+	//extract json scaffold Nstats
+        var json_scaffold_nstats = ref.ScaffoldStat;
+        console.log(json_scaffold_nstats.Nstats);
+        console.log(json_gapLength);
         // D3 test
         var data = [10,22,30,40,53];
         res.render('refdetail', {
@@ -45,7 +53,8 @@ router.get('/', function(req, res, next) {
             json_gapLength: JSON.stringify(json_gapLength),
             json_contigLengthWithN: JSON.stringify(json_contigLengthWithN),
             json_contigLengthWithoutN: JSON.stringify(json_contigLengthWithoutN),
-            json_scaffoldLengt: JSON.stringify(json_gapLength)
+            json_scaffoldLengt: JSON.stringify(json_gapLength),
+            data_scaffoldNstats: json_scaffold_nstats.Nstats
         });
     });
 });
