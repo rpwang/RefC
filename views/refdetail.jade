@@ -14,55 +14,214 @@ block content
           h3 Scaffold Statistic
           h5 General
           div(class='row')
-           div(class='large-3 medium-3 columns') 
+           div(class='large-4 medium-4 columns')
             ul(class='no-bullet') 
              each scafValue, scafIndex in specValue
               if scafIndex == "Nstats"
               else
                li #{scafIndex} : #{scafValue}
-           div(class='large-9 medium-9 columns')
-            div(class='large-2 columns')
-             h1 50
-             h2 #{data_scaffoldNstats.N50}
-             h2 #{data_scaffoldNstats.L50}
-            div(class='large-10 columns')
-             ul(class='inline-list')
-              li(class='n-stats')  10
-              li(class='n-stats')  20
-              li(class='n-stats') 30
-              li(class='n-stats') 40
-             ul(class='inline-list')
-              li(class='n-stats') 60
-              li(class='n-stats') 70
-              li(class='n-stats') 80
-              li(class='n-stats') 90
-            //each NstatsValue, NstatsIndex in data_scaffoldNstats
-             
-
-
+           div(class='large-8 medium-8 columns')
+            div(class='large-3 columns')
+             ul(class="pricing-table")
+              li(class='title') N50 / L50
+              li(class='bullet-item') #{data_scaffoldNstats.N50}
+              li(class='bullet-item') #{data_scaffoldNstats.L50}
+            div(class='large-9 columns')
+             table
+               thead
+                tr
+                 th N10 / L10
+                 th N20 / L20
+                 th N30 / L30
+                 th N40 / L40
+               tbody
+                tr
+                 td(class='text-center') #{data_scaffoldNstats.N10}
+                 td(class='text-center') #{data_scaffoldNstats.N20}
+                 td(class='text-center') #{data_scaffoldNstats.N30}
+                 td(class='text-center') #{data_scaffoldNstats.N40}
+                tr
+                 td.text-center #{data_scaffoldNstats.L10}
+                 td.text-center #{data_scaffoldNstats.L20}
+                 td.text-center #{data_scaffoldNstats.L30}
+                 td.text-center #{data_scaffoldNstats.L40}
+             table
+              thead
+                 th N60 / L60
+                 th N70 / L70
+                 th N80 / L80
+                 th N90 / L90
+               tbody
+                tr
+                 td.text-center #{data_scaffoldNstats.N60}
+                 td.text-center #{data_scaffoldNstats.N70}
+                 td.text-center #{data_scaffoldNstats.N80}
+                 td.text-center #{data_scaffoldNstats.N90}
+                tr
+                 td.text-center #{data_scaffoldNstats.L60}
+                 td.text-center #{data_scaffoldNstats.L70}
+                 td.text-center #{data_scaffoldNstats.L80}
+                 td.text-center #{data_scaffoldNstats.L90}
  
        if specIndex == "ContigStat"
         div(class='panel')
          h3 ContigStats
-         each contigValue, contigIndex in specValue
-          li #{contigIndex}:
-            each contigSpecValue, contigSpecIndex in contigValue
-              if contigSpecIndex == "Nstats"
-                ul(class='inline-list')
-                 each val, index in contigSpecValue
-                  li #{index}: #{val}
+         h5 With N
+          div(class='row')
+           div(class='large-4 medium-4 columns')
+            ul(class='no-bullet')
+             each scafValue, scafIndex in specValue.WithN
+              if scafIndex == "Nstats"
               else
-               li #{contigSpecIndex} : #{contigSpecValue}
+               li #{scafIndex} : #{scafValue}
+           div(class='large-8 medium-8 columns')
+            div(class='large-3 columns')
+             ul(class="pricing-table")
+              li(class='title') N50 / L50
+              li(class='bullet-item') #{data_contigWithnNstats.N50}
+              li(class='bullet-item') #{data_contigWithnNstats.L50}
+            div(class='large-9 columns')
+             table
+              thead
+               tr
+                th N10 / L10
+                th N20 / L20
+                th N30 / L30
+                th N40 / L40
+              tbody
+               tr
+                td(class='text-center') #{data_contigWithnNstats.N10}
+                td(class='text-center') #{data_contigWithnNstats.N20}
+                td(class='text-center') #{data_contigWithnNstats.N30}
+                td(class='text-center') #{data_contigWithnNstats.N40}
+               tr
+                td.text-center #{data_contigWithnNstats.L10}
+                td.text-center #{data_contigWithnNstats.L20}
+                td.text-center #{data_contigWithnNstats.L30}
+                td.text-center #{data_contigWithnNstats.L40}
+             table
+              thead
+               th N60 / L60
+               th N70 / L70
+               th N80 / L80
+               th N90 / L90
+              tbody
+               tr
+                td.text-center #{data_contigWithnNstats.N60}
+                td.text-center #{data_contigWithnNstats.N70}
+                td.text-center #{data_contigWithnNstats.N80}
+                td.text-center #{data_contigWithnNstats.N90}
+               tr
+                td.text-center #{data_contigWithnNstats.L60}
+                td.text-center #{data_contigWithnNstats.L70}
+                td.text-center #{data_contigWithnNstats.L80}
+                td.text-center #{data_contigWithnNstats.L90}
+         h5 Without N
+          div(class='row')
+           div(class='large-4 medium-4 columns')
+            ul(class='no-bullet')
+             each scafValue, scafIndex in specValue.WithoutN
+              if scafIndex == "Nstats"
+              else
+               li #{scafIndex} : #{scafValue}
+           div(class='large-8 medium-8 columns')
+            div(class='large-3 columns')
+             ul(class="pricing-table")
+              li(class='title') N50 / L50
+              li(class='bullet-item') #{data_contigWithoutnNstats.N50}
+              li(class='bullet-item') #{data_contigWithoutnNstats.L50}
+            div(class='large-9 columns')
+             table
+              thead
+               tr
+                th N10 / L10
+                th N20 / L20
+                th N30 / L30
+                th N40 / L40
+              tbody
+               tr
+                td(class='text-center') #{data_contigWithoutnNstats.N10}
+                td(class='text-center') #{data_contigWithoutnNstats.N20}
+                td(class='text-center') #{data_contigWithoutnNstats.N30}
+                td(class='text-center') #{data_contigWithoutnNstats.N40}
+               tr
+                td.text-center #{data_contigWithoutnNstats.L10}
+                td.text-center #{data_contigWithoutnNstats.L20}
+                td.text-center #{data_contigWithoutnNstats.L30}
+                td.text-center #{data_contigWithoutnNstats.L40}
+             table
+              thead
+               th N60 / L60
+               th N70 / L70
+               th N80 / L80
+               th N90 / L90
+              tbody
+               tr
+                td.text-center #{data_contigWithoutnNstats.N60}
+                td.text-center #{data_contigWithoutnNstats.N70}
+                td.text-center #{data_contigWithoutnNstats.N80}
+                td.text-center #{data_contigWithoutnNstats.N90}
+               tr
+                td.text-center #{data_contigWithoutnNstats.L60}
+                td.text-center #{data_contigWithoutnNstats.L70}
+                td.text-center #{data_contigWithoutnNstats.L80}
+                td.text-center #{data_contigWithoutnNstats.L90}
+
+
+
       if specIndex == "GapStat"
         div(class='panel')
          h3 GapStats
-         each gapValue, gapIndex in specValue
-          if gapIndex == "Nstats"
-           ul(class='inline-list')
-            each gapSpecValue, gapSpecIndex in gapValue
-             li #{gapSpecIndex} : #{gapSpecValue}
-          else
-           li #{gapIndex} : #{gapValue}
+         h5 General
+          div(class='row')
+           div(class='large-4 medium-4 columns')
+            ul(class='no-bullet')
+             each scafValue, scafIndex in specValue
+              if scafIndex == "Nstats"
+              else
+               li #{scafIndex} : #{scafValue}
+           div(class='large-8 medium-8 columns')
+            div(class='large-3 columns')
+             ul(class="pricing-table")
+              li(class='title') N50 / L50
+              li(class='bullet-item') #{data_gapNstats.N50}
+              li(class='bullet-item') #{data_gapNstats.L50}
+            div(class='large-9 columns')
+             table
+              thead
+               tr
+                th N10 / L10
+                th N20 / L20
+                th N30 / L30
+                th N40 / L40
+              tbody
+               tr
+                td(class='text-center') #{data_gapNstats.N10}
+                td(class='text-center') #{data_gapNstats.N20}
+                td(class='text-center') #{data_gapNstats.N30}
+                td(class='text-center') #{data_gapNstats.N40}
+               tr
+                td.text-center #{data_gapNstats.L10}
+                td.text-center #{data_gapNstats.L20}
+                td.text-center #{data_gapNstats.L30}
+                td.text-center #{data_gapNstats.L40}
+             table
+              thead
+               th N60 / L60
+               th N70 / L70
+               th N80 / L80
+               th N90 / L90
+              tbody
+               tr
+                td.text-center #{data_gapNstats.N60}
+                td.text-center #{data_gapNstats.N70}
+                td.text-center #{data_gapNstats.N80}
+                td.text-center #{data_gapNstats.N90}
+               tr
+                td.text-center #{data_gapNstats.L60}
+                td.text-center #{data_gapNstats.L70}
+                td.text-center #{data_gapNstats.L80}
+                td.text-center #{data_gapNstats.L90}
  //
   h1 LengthDistribution
   h2 gapStats

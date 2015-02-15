@@ -1,11 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  h2 General overview
-  p Number of references found in DB: #{nOrefs}
-  p The references:
-  ul
+ div(class='row')
+  div(class='large-12 columns')
+   h1= title
+   h2 General overview
+   p Number of references found in DB: #{nOrefs}
+   p The references:
+   ul
     each refValue, i in referencelist
      each refProp, o in refValue.reference
       if o == "name"
@@ -14,6 +16,6 @@ block content
         li 
            a(href='refdetail?ref_id=#{refValue._id}') #{refProp} #{refValue._id} #{Refname.name}
 
-  h2 Compare references
+   h2 Compare references
    p Work in progress.
 
